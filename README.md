@@ -6,3 +6,6 @@
 - MySQL5.7
 - Thymeleaf
 - Java .8
+
+### 로컬실행
+  http://localhost:8080/main
