@@ -1,0 +1,30 @@
+@charset "UTF-8";
+
+/* 사이드바 */
+.sidebar {
+    margin-bottom: 10px;
+    background-color: darkcyan;
+    position: fixed;
+    width: 10%;
+    height: 100%;
+}
+
+.menuTitle {
+    color: aliceblue;
+    margin: 10px;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.menuContents {
+    color: aliceblue;
+    margin-left: 20px;
+}
+
+/* 메인 콘텐츠 */
+.container {
+    margin-left: 10%;
+    background-color: bisque;
+    padding: 1px 16px;
+    height: 100%;
+}

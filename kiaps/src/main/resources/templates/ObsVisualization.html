@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" th:src="@{/js/ObsVisualization.js}"></script>
+    <title>검증시스템</title>
+</head>
+<body>
+<div id="content" layout:fragment="content" class="container">
+
+<br/><h3 id="title" th:text="${title}">테스트</h3>
+
+    <form role="form" id="obsVisualization_form" th:object="${obsVisualizationForm}">
+        <input type="button" class="btn btn-primary" id="searchButton" value="검색" />
+    </form>
+</div>
+</body>
+</html>

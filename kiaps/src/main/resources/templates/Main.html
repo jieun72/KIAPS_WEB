@@ -1,11 +1,17 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
 <head>
     <meta charset="UTF-8">
-    <title>메인화면</title>
+    <script type="text/javascript" th:src="@{/js/Main.js}"></script>
+    <title>검증시스템</title>
 </head>
 <body>
+<div id="content" layout:fragment="content" class="container-fluid">
+
 <br/><h3 id="title" th:text="${title}">테스트</h3>
+
+</div>
 </body>
 </html>

@@ -12,7 +12,7 @@ public class MainController {
     @RequestMapping(method = RequestMethod.GET)
     public String testController(final Model model) throws Exception {
 
-        model.addAttribute("title", "테스트 타이틀");
+        model.addAttribute("title", "테스트 화면");
 
         return "Main";
     }
