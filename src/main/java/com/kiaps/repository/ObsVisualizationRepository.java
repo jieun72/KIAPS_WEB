@@ -2,6 +2,7 @@ package com.kiaps.repository;
 
 import com.kiaps.embed.SurfaceKey;
 import com.kiaps.entity.Surface;
+import com.kiaps.entity.Sonde;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -26,4 +27,11 @@ public interface ObsVisualizationRepository extends JpaRepository<Surface, Surfa
         "from Surface s "
     )
     List<String> findAllSurfaceData();
+
+    @Query(
+            "select " +
+            "   s.stnHgt " +
+            "from Sonde s"
+    )
+    List<String> findAllSondeData();
 }

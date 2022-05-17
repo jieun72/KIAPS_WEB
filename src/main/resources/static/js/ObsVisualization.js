@@ -8,10 +8,11 @@ $(document).ready(function(){
         $.ajax({
             url: "/obsVisualization",
             type: "POST",
-            data: $("#obsVisualization_form").serialize()
+            data: $("#searchForm").serialize()
 
         }).done(function (data, textStatus, jqXHR) {
-            var result = $(data).find("#result").text();
+            var result = $(data).find("#resultArea");
+            $("#resultArea").html(result);
 
             console.log("success");
         }).fail(function (jqXHR, textStatus, errorThrown) {

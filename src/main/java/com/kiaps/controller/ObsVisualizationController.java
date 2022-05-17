@@ -1,5 +1,6 @@
 package com.kiaps.controller;
 
+import com.kiaps.form.ObsVisualizationSearchForm;
 import com.kiaps.service.ObsVisualizationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -28,13 +29,20 @@ public class ObsVisualizationController {
 
     /*
     * GET 리퀘스트 (화면 초기화)
+    * @param ObsVisualizationSearchForm searchForm
     * @param Model model
     * @retuen String 화면명
     * @throws Exception 예외
     * */
     @RequestMapping(method = RequestMethod.GET)
-    public String init(final Model model) throws Exception {
+    public String init(
+            final ObsVisualizationSearchForm searchForm,
+            final Model model) throws Exception {
 
+        searchForm.setSearchDate("20200601060000");
+        searchForm.setSearchType("1");
+
+        model.addAttribute(searchForm);
         model.addAttribute("title", "이종관측 시각화 화면");
 
         return "ObsVisualization";
@@ -42,16 +50,23 @@ public class ObsVisualizationController {
 
     /*
     * POST 리퀘스트 (검색)
+    * @param ObsVisualizationSearchForm searchForm
     * @param Model model
-    * @param
     * @return String 화면명
     * @throws Exception 예외
     * */
     @RequestMapping(method = RequestMethod.POST)
-    public String search(final Model model) throws Exception {
+    public String search(
+            final ObsVisualizationSearchForm searchForm,
+            final Model model) throws Exception {
+
+        System.out.println(searchForm.getSearchDate() + " " + searchForm.getSearchType());
 
         List<String> list = this.obsService.searchObsVisualization();
-        System.out.print(list.get(0));
+        System.out.println(list.get(0));
+
+        model.addAttribute("resultCount", list.size());
+        model.addAttribute("resultList", list);
 
         return "ObsVisualization";
     }

@@ -24,7 +24,8 @@ public class ObsVisualizationServiceImpl implements ObsVisualizationService {
     @Override
     public final List<String> searchObsVisualization() {
 
-        List<String> returnList = this.obsRepository.findAllSurfaceData();
+        //List<String> returnList = this.obsRepository.findAllSurfaceData();
+        List<String> returnList = this.obsRepository.findAllSondeData();
         return returnList;
 
     }
