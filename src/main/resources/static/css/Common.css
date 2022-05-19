@@ -24,7 +24,12 @@
 /* 메인 콘텐츠 */
 .container {
     margin-left: 10%;
-    background-color: bisque;
     padding: 1px 16px;
     height: 100%;
+}
+
+/* 차트 */
+.chartArea {
+    height: 500px;
+    padding: 20px;
 }

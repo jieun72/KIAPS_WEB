@@ -2,12 +2,15 @@ package com.kiaps.controller;
 
 import com.kiaps.form.ObsVisualizationSearchForm;
 import com.kiaps.service.ObsVisualizationService;
+import com.kiaps.vo.ResponseSondeVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -41,6 +44,8 @@ public class ObsVisualizationController {
 
         searchForm.setSearchDate("20200601060000");
         searchForm.setSearchType("1");
+        searchForm.setSondeList(null);
+        searchForm.setSurfaceList(null);
 
         model.addAttribute(searchForm);
         model.addAttribute("title", "이종관측 시각화 화면");
@@ -52,22 +57,23 @@ public class ObsVisualizationController {
     * POST 리퀘스트 (검색)
     * @param ObsVisualizationSearchForm searchForm
     * @param Model model
-    * @return String 화면명
+    * @return ObsVisualizationSearchForm searchForm
     * @throws Exception 예외
     * */
     @RequestMapping(method = RequestMethod.POST)
-    public String search(
+    public @ResponseBody ObsVisualizationSearchForm search(
             final ObsVisualizationSearchForm searchForm,
             final Model model) throws Exception {
+        
+        // TODO:검색조건으로 검색하는 로직
+        
+        ObsVisualizationSearchForm returnForm = this.obsService.searchObsVisualization();
 
-        System.out.println(searchForm.getSearchDate() + " " + searchForm.getSearchType());
+        searchForm.setSurfaceList(returnForm.getSurfaceList());
+        searchForm.setSondeList(returnForm.getSondeList());
 
-        List<String> list = this.obsService.searchObsVisualization();
-        System.out.println(list.get(0));
+        model.addAttribute(searchForm);
 
-        model.addAttribute("resultCount", list.size());
-        model.addAttribute("resultList", list);
-
-        return "ObsVisualization";
+        return searchForm;
     }
 }

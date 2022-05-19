@@ -1,5 +1,6 @@
 package com.kiaps.entity;
 
+import com.kiaps.embed.SondeKey;
 import com.kiaps.embed.SurfaceKey;
 import lombok.*;
 import org.hibernate.annotations.Type;
@@ -30,7 +31,7 @@ public class Sonde {
     /* PK */
     @Type(type = "pg-uuid")
     @EmbeddedId
-    private SurfaceKey surfaceKey;
+    private SondeKey sondeKey;
 
     /* 번호 */
     @Column(name = "nobs", nullable = false, insertable = false, updatable = false)

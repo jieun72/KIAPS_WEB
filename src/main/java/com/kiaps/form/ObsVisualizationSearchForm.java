@@ -1,6 +1,10 @@
 package com.kiaps.form;
 
+import com.kiaps.vo.ResponseSondeVO;
+import com.kiaps.vo.ResponseSurfaceVO;
 import lombok.*;
+
+import java.util.List;
 
 /**
  * author         : Jieun Lee
@@ -23,5 +27,11 @@ public class ObsVisualizationSearchForm {
 
     /* 검색조건-타입 */
     private String searchType;
+
+    /* surface 결과리스트 */
+    private List<ResponseSurfaceVO> surfaceList;
+
+    /* sonde 결과리스트 */
+    private List<ResponseSondeVO> sondeList;
 
 }

@@ -1,8 +1,9 @@
 package com.kiaps.repository;
 
-import com.kiaps.embed.SurfaceKey;
-import com.kiaps.entity.Surface;
-import com.kiaps.entity.Sonde;
+import com.kiaps.embed.*;
+import com.kiaps.entity.*;
+import com.kiaps.vo.ResponseSondeVO;
+import com.kiaps.vo.ResponseSurfaceVO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -22,16 +23,29 @@ import java.util.List;
 public interface ObsVisualizationRepository extends JpaRepository<Surface, SurfaceKey> {
 
     @Query(
-        "select " +
-        "   s.dateTime " +
-        "from Surface s "
-    )
-    List<String> findAllSurfaceData();
-
-    @Query(
             "select " +
-            "   s.stnHgt " +
-            "from Sonde s"
+            "   s1.lat as surfaceLat, " +
+            "   s1.t2m as surfaceTemp " +
+            "from Surface s1 " +
+            "where s1.t2m <> -999.99 " +
+            "and s1.surfaceKey.datetime = '2020-06-01 06:00:00'"
     )
-    List<String> findAllSondeData();
+    List<ResponseSurfaceVO> findAllSurfaceData();
+
+    @Query(value =
+            "select " +
+            "   s2.lat as sondeLat, " +
+            "   s2.T as sondeTemp " +
+            "from sonde s2 " +
+            "inner join (" +
+            "select s3.nobs as nobs," +
+            "       max(s3.Pressure) as pr " +
+            "from sonde s3 " +
+            "where T != -999.99 " +
+            "group by s3.nobs) b " +
+            "on s2.nobs = b.nobs and s2.Pressure = b.pr " +
+            "and s2.`datetime` = '2020-06-01 06:00:00' ",
+            nativeQuery = true
+    )
+    List<ResponseSondeVO> findAllSondeData();
 }

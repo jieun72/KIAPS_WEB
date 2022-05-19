@@ -10,13 +10,12 @@
 <body>
 <div id="content" layout:fragment="content" class="container">
 
-<br/><h3 id="title" th:text="${title}">테스트</h3>
-
+<br/><h3 id="title" th:text="${title}">타이틀</h3>
     <form role="form" id="searchForm" th:object="${obsVisualizationSearchForm}">
 
         <tr height="15" style="vertical-align: middle;">
             <td class="order-title-style">검색날짜 </td>
-            <input type="text" id="searchDate" class="middle-size" maxlength="15" size="20" name="searchDate" th:field="*{searchDate}"/>
+            <input type="text" id="searchDate" class="middle-size" maxlength="15" size="20" name="searchDate" th:field="*{searchDate}"/><br/>
             <td class="order-title-style">검색타입 </td>
             <td class="order-content-style">
                 <label>
@@ -26,11 +25,9 @@
             </label></td>
         </tr>
         <input type="button" class="btn btn-primary" id="searchButton" value="검색" />
+
         <div id="resultArea">
-            <span th:if="${resultCount > 0 }" th:text="'결과 : ' + ${resultCount} + '건'"></span><br/>
-            <th:block th:each="form, status : ${resultList}">
-                <span th:text="${form}"></span><br/>
-            </th:block>
+            <div id="echart_scatter" class="chartArea"></div>
         </div>
     </form>
 

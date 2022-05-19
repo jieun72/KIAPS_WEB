@@ -1,6 +1,9 @@
 package com.kiaps.service;
 
+import com.kiaps.form.ObsVisualizationSearchForm;
 import com.kiaps.repository.ObsVisualizationRepository;
+import com.kiaps.vo.ResponseSondeVO;
+import com.kiaps.vo.ResponseSurfaceVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,11 +25,15 @@ public class ObsVisualizationServiceImpl implements ObsVisualizationService {
     private final ObsVisualizationRepository obsRepository;
 
     @Override
-    public final List<String> searchObsVisualization() {
+    public final ObsVisualizationSearchForm searchObsVisualization() {
 
-        //List<String> returnList = this.obsRepository.findAllSurfaceData();
-        List<String> returnList = this.obsRepository.findAllSondeData();
-        return returnList;
+        ObsVisualizationSearchForm returnForm = new ObsVisualizationSearchForm();
+
+        returnForm.setSurfaceList(this.obsRepository.findAllSurfaceData());
+        returnForm.setSondeList(this.obsRepository.findAllSondeData());
+
+        return returnForm;
 
     }
+
 }

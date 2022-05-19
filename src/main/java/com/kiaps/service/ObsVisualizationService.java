@@ -1,5 +1,8 @@
 package com.kiaps.service;
 
+import com.kiaps.form.ObsVisualizationSearchForm;
+import com.kiaps.vo.ResponseSondeVO;
+
 import java.util.List;
 
 /**
@@ -15,8 +18,8 @@ public interface ObsVisualizationService {
 
     /*
     * 이종관측 시각화 화면 검색 처리
-    * @param
-    * @return
+    * @param 검색조건
+    * @return ObsVisualizationSearchForm searchForm
     * */
-    List<String> searchObsVisualization();
+    ObsVisualizationSearchForm searchObsVisualization();
 }
