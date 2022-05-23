@@ -4,8 +4,11 @@ package com.kiaps.vo;
 public interface ResponseSondeVO {
 
     /* 위도 */
-    double getSondeLat();
+    Double getSondeLat();
+
+    /* 경도 */
+    Double getSondeLon();
 
     /* 기온 */
-    double getSondeTemp();
+    Double getSondeTemp();
 }

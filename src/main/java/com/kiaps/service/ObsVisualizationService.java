@@ -3,6 +3,7 @@ package com.kiaps.service;
 import com.kiaps.form.ObsVisualizationSearchForm;
 import com.kiaps.vo.ResponseSondeVO;
 
+import java.text.ParseException;
 import java.util.List;
 
 /**
@@ -21,5 +22,5 @@ public interface ObsVisualizationService {
     * @param 검색조건
     * @return ObsVisualizationSearchForm searchForm
     * */
-    ObsVisualizationSearchForm searchObsVisualization();
+    ObsVisualizationSearchForm searchObsVisualization(String datetime) throws ParseException;
 }

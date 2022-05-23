@@ -8,29 +8,37 @@
     <title>검증시스템</title>
 </head>
 <body>
-<div id="content" layout:fragment="content" class="container">
+    <div id="content" layout:fragment="content" class="container">
 
-<br/><h3 id="title" th:text="${title}">타이틀</h3>
-    <form role="form" id="searchForm" th:object="${obsVisualizationSearchForm}">
+        <br/><h3 id="title" th:text="${title}">타이틀</h3>
 
-        <tr height="15" style="vertical-align: middle;">
-            <td class="order-title-style">검색날짜 </td>
-            <input type="text" id="searchDate" class="middle-size" maxlength="15" size="20" name="searchDate" th:field="*{searchDate}"/><br/>
-            <td class="order-title-style">검색타입 </td>
-            <td class="order-content-style">
-                <label>
-                    <input type="radio" name="searchType"  value="1" th:field="*{searchType}">sonde, surface 전체 산포도
-                </label> <label>
-                <input type="radio" name="searchType" value="2" th:field="*{searchType}">sonde와 수평위치가 가까운 suface 산포도
-            </label></td>
-        </tr>
-        <input type="button" class="btn btn-primary" id="searchButton" value="검색" />
+        <form role="form" id="searchForm" th:object="${obsVisualizationSearchForm}">
+            <table>
+                <tr height="20" style="vertical-align: top;">
+                    <td class="order-title-style">검색날짜 </td>
+                    <td><input type="text" id="searchDate" class="middle-size" maxlength="20" size="20" name="searchDate" th:field="*{searchDate}"/><br/></td>
+                </tr>
+                <tr height="15" style="vertical-align: top;">
+                    <td rowspan="2" class="order-title-style">검색타입 </td>
+                    <td class="order-content-style">
+                        <label>
+                            <input type="radio" name="searchType"  value="1" th:field="*{searchType}">sonde, surface 전체 산포도
+                        </label><br/>
+                        <label>
+                        <input type="radio" name="searchType" value="2" th:field="*{searchType}">sonde와 수평위치가 가까운 suface 산포도
+                    </label></td>
+                </tr>
+            </table>
+            <div style="float: right">
+                <input type="button" class="btn btn-primary" id="searchButton" value="검색" />
+            </div>
+            <br/><br/>
 
-        <div id="resultArea">
-            <div id="echart_scatter" class="chartArea"></div>
-        </div>
-    </form>
+            <div id="resultArea">
+                <div id="echart_scatter" class="chartArea"></div>
+            </div>
+        </form>
 
-</div>
+    </div>
 </body>
 </html>

@@ -28,13 +28,14 @@ public interface ObsVisualizationRepository extends JpaRepository<Surface, Surfa
             "   s1.t2m as surfaceTemp " +
             "from Surface s1 " +
             "where s1.t2m <> -999.99 " +
-            "and s1.surfaceKey.datetime = '2020-06-01 06:00:00'"
+            "and s1.surfaceKey.datetime = :datetime"
     )
-    List<ResponseSurfaceVO> findAllSurfaceData();
+    List<ResponseSurfaceVO> findAllSurfaceData(String datetime);
 
     @Query(value =
             "select " +
             "   s2.lat as sondeLat, " +
+            "   s2.lon as sondeLon, " +
             "   s2.T as sondeTemp " +
             "from sonde s2 " +
             "inner join (" +
@@ -44,8 +45,9 @@ public interface ObsVisualizationRepository extends JpaRepository<Surface, Surfa
             "where T != -999.99 " +
             "group by s3.nobs) b " +
             "on s2.nobs = b.nobs and s2.Pressure = b.pr " +
-            "and s2.`datetime` = '2020-06-01 06:00:00' ",
+            "and s2.`datetime` = :datetime",
             nativeQuery = true
     )
-    List<ResponseSondeVO> findAllSondeData();
+    List<ResponseSondeVO> findAllSondeData(String datetime);
+
 }

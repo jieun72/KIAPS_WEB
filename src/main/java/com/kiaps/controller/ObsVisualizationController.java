@@ -42,7 +42,7 @@ public class ObsVisualizationController {
             final ObsVisualizationSearchForm searchForm,
             final Model model) throws Exception {
 
-        searchForm.setSearchDate("20200601060000");
+        searchForm.setSearchDate("2020-06-01 06:00:00");
         searchForm.setSearchType("1");
         searchForm.setSondeList(null);
         searchForm.setSurfaceList(null);
@@ -65,9 +65,10 @@ public class ObsVisualizationController {
             final ObsVisualizationSearchForm searchForm,
             final Model model) throws Exception {
         
-        // TODO:검색조건으로 검색하는 로직
-        
-        ObsVisualizationSearchForm returnForm = this.obsService.searchObsVisualization();
+        // 검색조건
+        String datetime = searchForm.getSearchDate();
+
+        ObsVisualizationSearchForm returnForm = this.obsService.searchObsVisualization(datetime);
 
         searchForm.setSurfaceList(returnForm.getSurfaceList());
         searchForm.setSondeList(returnForm.getSondeList());

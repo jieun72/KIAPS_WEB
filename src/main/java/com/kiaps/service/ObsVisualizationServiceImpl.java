@@ -2,12 +2,10 @@ package com.kiaps.service;
 
 import com.kiaps.form.ObsVisualizationSearchForm;
 import com.kiaps.repository.ObsVisualizationRepository;
-import com.kiaps.vo.ResponseSondeVO;
-import com.kiaps.vo.ResponseSurfaceVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.text.ParseException;
 
 /**
  * author         : Jieun Lee
@@ -25,12 +23,12 @@ public class ObsVisualizationServiceImpl implements ObsVisualizationService {
     private final ObsVisualizationRepository obsRepository;
 
     @Override
-    public final ObsVisualizationSearchForm searchObsVisualization() {
+    public final ObsVisualizationSearchForm searchObsVisualization(String datetime) throws ParseException {
 
         ObsVisualizationSearchForm returnForm = new ObsVisualizationSearchForm();
 
-        returnForm.setSurfaceList(this.obsRepository.findAllSurfaceData());
-        returnForm.setSondeList(this.obsRepository.findAllSondeData());
+        returnForm.setSurfaceList(this.obsRepository.findAllSurfaceData(datetime));
+        returnForm.setSondeList(this.obsRepository.findAllSondeData(datetime));
 
         return returnForm;
 
