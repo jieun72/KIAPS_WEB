@@ -46,6 +46,7 @@ public class ObsVisualizationController {
         searchForm.setSearchType("1");
         searchForm.setSondeList(null);
         searchForm.setSurfaceList(null);
+        searchForm.setSurfaceList2(null);
 
         model.addAttribute(searchForm);
         model.addAttribute("title", "이종관측 시각화 화면");
@@ -72,6 +73,7 @@ public class ObsVisualizationController {
 
         searchForm.setSurfaceList(returnForm.getSurfaceList());
         searchForm.setSondeList(returnForm.getSondeList());
+        searchForm.setSurfaceList2(returnForm.getSurfaceList2());
 
         model.addAttribute(searchForm);
 

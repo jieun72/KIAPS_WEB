@@ -31,6 +31,9 @@ public class ObsVisualizationSearchForm {
     /* surface 결과리스트 */
     private List<ResponseSurfaceVO> surfaceList;
 
+    /* surface 결과리스트2 */
+    private List<ResponseSurfaceVO> surfaceList2;
+
     /* sonde 결과리스트 */
     private List<ResponseSondeVO> sondeList;
 

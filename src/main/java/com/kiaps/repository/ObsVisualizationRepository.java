@@ -50,4 +50,13 @@ public interface ObsVisualizationRepository extends JpaRepository<Surface, Surfa
     )
     List<ResponseSondeVO> findAllSondeData(String datetime);
 
+    @Query(value =
+            "SELECT " +
+            "   s.T2m as surfaceTemp, " +
+            "   s.lat as surfaceLat " +
+            "FROM surface_from_sonde s " +
+            "where s.T2m <> -999.99 and s.`datetime` = :datetime ",
+            nativeQuery = true
+    )
+    List<ResponseSurfaceVO> findSurfaceByDistance(String datetime);
 }

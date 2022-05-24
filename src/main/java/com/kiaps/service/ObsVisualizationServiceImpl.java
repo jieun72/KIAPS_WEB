@@ -2,10 +2,13 @@ package com.kiaps.service;
 
 import com.kiaps.form.ObsVisualizationSearchForm;
 import com.kiaps.repository.ObsVisualizationRepository;
+import com.kiaps.vo.ResponseSurfaceVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * author         : Jieun Lee
@@ -29,6 +32,7 @@ public class ObsVisualizationServiceImpl implements ObsVisualizationService {
 
         returnForm.setSurfaceList(this.obsRepository.findAllSurfaceData(datetime));
         returnForm.setSondeList(this.obsRepository.findAllSondeData(datetime));
+        returnForm.setSurfaceList2(this.obsRepository.findSurfaceByDistance(datetime));
 
         return returnForm;
 

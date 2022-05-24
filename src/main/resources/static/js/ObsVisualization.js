@@ -17,6 +17,7 @@ $(document).ready(function(){
             // 결과 데이터 배열 처리
             const sondeList = data.sondeList;
             const surfaceList = data.surfaceList;
+            const surfaceList2 = data.surfaceList2;
 
             let surfaceArr = [];
             surfaceList.forEach(obj => {
@@ -28,8 +29,14 @@ $(document).ready(function(){
                 sondeArr.push([obj.sondeLat, obj.sondeTemp]);
             });
 
+            let surfaceArr2 = [];
+            surfaceList2.forEach(obj => {
+                surfaceArr2.push([obj.surfaceLat, obj.surfaceTemp]);
+            });
+
             // 차트 작성
-            setChart(sondeArr, surfaceArr);
+            setChart('sonde, surface 전체 산포도', sondeArr, surfaceArr, 1);
+            setChart('sonde와 수평위치가 가까운 suface 산포도',sondeArr, surfaceArr2, 2);
 
         }).fail(function (jqXHR, textStatus, errorThrown) {
             alert(textStatus + jqXHR);
@@ -37,13 +44,23 @@ $(document).ready(function(){
     });
 });
 
-function setChart(sondeArr, surfaceArr) {
+function setChart(title, sondeArr, surfaceArr, num) {
 
     var theme = {
         color: [
             '#26B99A', '#34495E', '#BDC3C7', '#3498DB',
             '#9B59B6', '#8abb6f', '#759c6a', '#bfd3b7'
         ],
+
+        title: {
+            x: 'center',
+            y: 'top',
+            itemGap: 20,
+            textStyle: {
+                fontWeight: 'bolder',
+                fontsize: 20
+            }
+        },
 
         dataRange: {
             color: ['#1f610a', '#97b58d']
@@ -110,9 +127,12 @@ function setChart(sondeArr, surfaceArr) {
         }
     };
 
-    var echartScatter = echarts.init($('#echart_scatter')[0], theme);
+    var echartScatter = echarts.init($('#echart_scatter'+num)[0], theme);
 
     echartScatter.setOption({
+        title: {
+            text: title
+        },
         tooltip: {
             trigger: 'axis',
             showDelay: 0,
@@ -125,6 +145,7 @@ function setChart(sondeArr, surfaceArr) {
             }
         },
         legend: {
+            y: 40,
             data: ['Sonde', 'Surface']
         },
         toolbox: {
@@ -138,6 +159,9 @@ function setChart(sondeArr, surfaceArr) {
         },
         xAxis: [{
             type: 'value',
+            name: 'lat',
+            nameLocation: 'middle',
+            nameGap: 25,
             scale: true,
             axisLabel: {
                 formatter: '{value}'
@@ -145,6 +169,9 @@ function setChart(sondeArr, surfaceArr) {
         }],
         yAxis: [{
             type: 'value',
+            name: 'temp.(K)',
+            nameLocation: 'middle',
+            nameGap: 35,
             scale: true,
             axisLabel: {
                 formatter: '{value}'
@@ -153,7 +180,7 @@ function setChart(sondeArr, surfaceArr) {
         series: [{
             name: 'Surface',
             type: 'scatter',
-            symbolSize: 7,
+            symbolSize: 3,
             tooltip: {
                 trigger: 'item',
                 formatter: function(params) {
@@ -171,7 +198,7 @@ function setChart(sondeArr, surfaceArr) {
         }, {
             name: 'Sonde',
             type: 'scatter',
-            symbolSize: 7,
+            symbolSize: 3,
             tooltip: {
                 trigger: 'item',
                 formatter: function(params) {
