@@ -15,7 +15,8 @@ SELECT
 	k.lat,
 	k.lon,
 	k.T2m,
-	k.RH2m
+	k.RH2m,
+	k.sondeSeq
 FROM (
 	SELECT 
 		s.`datetime` as `datetime`,
@@ -24,7 +25,8 @@ FROM (
 		s.lat as lat,
 		s.lon as lon,
 		s.T2m as T2m,
-		s.RH2m as RH2m, 
+		s.RH2m as RH2m,
+		a.seq as sondeSeq,
 		(6371 * acos (cos(radians(a.lat))
 		* cos(radians(s.lat))
 		* cos(radians(s.lon - 180) - radians(a.lon))
