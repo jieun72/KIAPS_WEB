@@ -4,6 +4,9 @@ $(document).ready(function(){
     $("#menuTypes").removeClass("active");
     $("#statusComparison").addClass("active");
 
+    // 화면 초기처리 : 로딩바 숨김
+    $('#loading').hide();
+
     $(document).on('click', '#searchButton', function(){
 
         // 검색처리

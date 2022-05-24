@@ -5,6 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <script type="text/javascript" th:src="@{/js/ObsVisualization.js}"></script>
+    <script type="text/javascript" th:src="@{/js/Loading.js}"></script>
     <title>검증시스템</title>
 </head>
 <body>
@@ -33,6 +34,10 @@
                 <input type="button" class="btn btn-primary" id="searchButton" value="검색" />
             </div>
             <br/><br/>
+
+            <div class="loading-bar" id="loading">
+                <img th:src="@{/img/loading.gif}">
+            </div>
 
             <div id="resultArea">
                 <div style="width:550px; float: left;" id="echart_scatter1" class="chartArea"></div>
