@@ -5,7 +5,8 @@ INSERT INTO `surface_from_sonde` (
 	lat,
 	lon,
 	T2m,
-	RH2m
+	RH2m,
+	sondeSeq
 )
 
 SELECT 
