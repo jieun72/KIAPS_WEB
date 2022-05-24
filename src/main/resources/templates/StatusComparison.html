@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" th:src="@{/js/StatusComparison.js}"></script>
+    <title>검증시스템</title>
+</head>
+<body>
+    <div id="content" layout:fragment="content" class="container">
+
+        <br/><h3 class="main-title" id="title" th:text="${title}">타이틀</h3>
+
+        <form role="form" id="searchForm" th:object="${statusComparisonSearchForm}">
+            <table>
+                <tr height="20" style="vertical-align: top;">
+                    <td class="search-title">검색날짜기간 </td>
+                    <td><input type="text" id="searchDate" class="middle-size" maxlength="20" size="20" name="searchDate" th:field="*{searchDate}"/><br/></td>
+                </tr>
+            </table>
+            <div style="float: right">
+                <input type="button" class="btn btn-primary" id="searchButton" value="검색" />
+            </div>
+            <br/><br/>
+
+            <div id="resultArea">
+                <div style="width:550px; float: left;" id="echart_scatter1" class="chartArea"></div>
+            </div>
+        </form>
+
+    </div>
+</body>
+</html>
