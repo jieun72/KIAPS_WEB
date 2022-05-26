@@ -22,8 +22,11 @@ import java.util.List;
 @AllArgsConstructor
 public class StatusComparisonSearchForm {
 
-    /* 검색조건-날짜 */
-    private String searchDate;
+    /* 검색조건-날짜From */
+    private String fromDate;
+
+    /* 검색조건-날짜To */
+    private String toDate;
 
     /* surface 결과리스트 */
     private List<ResponseSurfaceVO> surfaceList;

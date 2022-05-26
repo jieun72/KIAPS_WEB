@@ -10,14 +10,14 @@
 </head>
 <body>
     <div id="content" layout:fragment="content" class="container">
-
         <br/><h3 class="main-title" id="title" th:text="${title}">타이틀</h3>
 
         <form role="form" id="searchForm" th:object="${statusComparisonSearchForm}">
             <table>
                 <tr height="20" style="vertical-align: top;">
                     <td class="search-title">검색날짜기간 </td>
-                    <td><input type="text" id="searchDate" class="middle-size" maxlength="20" size="20" name="searchDate" th:field="*{searchDate}"/><br/></td>
+                    <td><input type="text" id="fromDate" class="middle-size" maxlength="10" size="10" name="fromDate" th:field="*{fromDate}"/> ~ </td>
+                    <td><input type="text" id="toDate" class="middle-size" maxlength="10" size="10" name="toDate" th:field="*{toDate}"/><br/></td>
                 </tr>
             </table>
             <div style="float: right">
@@ -25,12 +25,10 @@
             </div>
             <br/><br/>
 
-            <div class="loading-bar" id="loading">
-                <img th:src="@{/img/loading.gif}">
-            </div>
+            <div class="loading-bar" id="loading"></div>
 
             <div id="resultArea">
-                <div style="width:550px; float: left;" id="echart_scatter1" class="chartArea"></div>
+                <div id="echart_line" class="chartArea"></div>
             </div>
         </form>
 

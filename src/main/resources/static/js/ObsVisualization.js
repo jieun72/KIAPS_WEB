@@ -97,7 +97,7 @@ function setChart(title, sondeArr, surfaceArr, num) {
         categoryAxis: {
             axisLine: {
                 lineStyle: {
-                    color: '#408829'
+                    color: 'rgba(0,0,0,0.5)'
                 }
             },
             splitLine: {

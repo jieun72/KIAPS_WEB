@@ -1,7 +1,7 @@
 package com.kiaps.controller;
 
 import com.kiaps.form.StatusComparisonSearchForm;
-import com.kiaps.service.ObsVisualizationService;
+import com.kiaps.service.StatusComparisonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class StatusComparisonController {
 
     /* 상태비교 화면 service */
-    // private final ObsVisualizationService obsService;
+    private final StatusComparisonService stcService;
 
     /*
     * GET 리퀘스트 (화면 초기화)
@@ -38,7 +38,8 @@ public class StatusComparisonController {
             final StatusComparisonSearchForm searchForm,
             final Model model) throws Exception {
 
-        searchForm.setSearchDate("2020-06-01 06:00:00");
+        searchForm.setFromDate("2020-06-16");
+        searchForm.setToDate("2020-06-19");
         searchForm.setSurfaceList(null);
         searchForm.setSurfaceList2(null);
 
@@ -48,4 +49,30 @@ public class StatusComparisonController {
         return "StatusComparison";
     }
 
+    /*
+     * POST 리퀘스트 (검색)
+     * @param StatusComparisonSearchForm searchForm
+     * @param Model model
+     * @return StatusComparisonSearchForm searchForm
+     * @throws Exception 예외
+     * */
+    @RequestMapping(method = RequestMethod.POST)
+    public @ResponseBody
+    StatusComparisonSearchForm search(
+            final StatusComparisonSearchForm searchForm,
+            final Model model) throws Exception {
+
+        // 검색조건
+        String fromDate = searchForm.getFromDate();
+        String toDate = searchForm.getToDate();
+
+        StatusComparisonSearchForm returnForm = this.stcService.searchStatusComparison(fromDate, toDate);
+
+        searchForm.setSurfaceList(returnForm.getSurfaceList());
+        searchForm.setSurfaceList2(returnForm.getSurfaceList2());
+
+        model.addAttribute(searchForm);
+
+        return searchForm;
+    }
 }

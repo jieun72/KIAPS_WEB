@@ -45,10 +45,15 @@
 
 /* 로딩바 */
 .loading-bar {
-    position: absolute;
-    left: 50%;
-    top: 30%;
-    background: #ffffff;
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    background: rgba(0,0,0,0.55) url(/img/loading.gif) no-repeat center center;
+    z-index: 10000;
 }
 
 /* 차트 */

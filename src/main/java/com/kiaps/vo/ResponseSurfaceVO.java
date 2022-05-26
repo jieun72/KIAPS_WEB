@@ -10,4 +10,10 @@ public interface ResponseSurfaceVO {
 
     /* 기온 */
     Double getSurfaceTemp();
+
+    /* 날짜시간 */
+    String getDateTime();
+
+    /* 자료수 */
+    Integer getCount();
 }
