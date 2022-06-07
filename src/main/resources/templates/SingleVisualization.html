@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" th:src="@{/js/SingleVisualization.js}"></script>
+    <script type="text/javascript" th:src="@{/js/Loading.js}"></script>
+    <title>검증시스템</title>
+</head>
+<body>
+    <div id="content" layout:fragment="content" class="container">
+        <br/><h3 class="main-title" id="title" th:text="${title}">타이틀</h3>
+
+        <form role="form" id="searchForm" th:object="${singleVisualizationSearchForm}">
+            <table>
+                <tr height="20" style="vertical-align: top;">
+                    <td class="search-title">검색날짜 </td>
+                    <td><input type="text" id="searchDate" class="middle-size" maxlength="20" size="20" name="searchDate" th:field="*{searchDate}"/><br/></td>
+                </tr>
+                <tr height="15" style="vertical-align: top;">
+                    <td class="search-title">검색타입 </td>
+                    <td class="order-content-style">
+                        <label>
+                            <input type="radio" name="searchType" value="1" th:field="*{searchType}">AMSU-A
+                        </label>
+                        <label>
+                            <input type="radio" name="searchType" value="2" th:field="*{searchType}">SONDE
+                        </label>
+                        <label>
+                            <input type="radio" name="searchType" value="3" th:field="*{searchType}">SURFACE
+                        </label></td>
+                </tr>
+                <tr height="15" style="vertical-align: top;" id="channelList">
+                    <td class="search-title">채널타입 </td>
+                    <td>
+                        <select class="form-select" id="channelType" th:field="*{channelType}">
+                            <option th:value="'ob(01)'" th:text="'channel 1'"></option>
+                            <option th:value="'ob(02)'" th:text="'channel 2'"></option>
+                            <option th:value="'ob(03)'" th:text="'channel 3'"></option>
+                            <option th:value="'ob(04)'" th:text="'channel 4'"></option>
+                            <option th:value="'ob(05)'" th:text="'channel 5'"></option>
+                            <option th:value="'ob(06)'" th:text="'channel 6'"></option>
+                            <option th:value="'ob(07)'" th:text="'channel 7'"></option>
+                            <option th:value="'ob(08)'" th:text="'channel 8'"></option>
+                            <option th:value="'ob(09)'" th:text="'channel 9'"></option>
+                            <option th:value="'ob(10)'" th:text="'channel 10'"></option>
+                            <option th:value="'ob(11)'" th:text="'channel 11'"></option>
+                            <option th:value="'ob(12)'" th:text="'channel 12'"></option>
+                            <option th:value="'ob(13)'" th:text="'channel 13'"></option>
+                            <option th:value="'ob(14)'" th:text="'channel 14'"></option>
+                            <option th:value="'ob(15)'" th:text="'channel 15'"></option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+            <div style="float: right">
+                <input type="button" class="btn btn-primary" id="searchButton" value="검색" />
+            </div>
+            <br/><br/><br/>
+
+            <div class="loading-bar" id="loading"></div>
+
+            <div id="resultArea">
+                <div style="width:100%;" id="echart_world" class="chartArea"></div>
+            </div>
+        </form>
+
+    </div>
+</body>
+</html>
