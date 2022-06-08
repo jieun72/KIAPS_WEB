@@ -51,7 +51,8 @@ public class SingleVisualizationServiceImpl implements SingleVisualizationServic
                 "select lat as amsuaLat, "+
                 "lon as amsuaLon, `" + channelType + "` as amsuaTemp " +
                 "from amsua " +
-                "where `datetime` = :datetime ")
+                "where `datetime` = :datetime " +
+                "and `" + channelType +"` <> -999.99 ")
                 .setParameter("datetime", datetime);
 
         List<ResponseAmsuaVO> amsuaList = jpaResultMapper.list(q, ResponseAmsuaVO.class);
