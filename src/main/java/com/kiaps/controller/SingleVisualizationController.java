@@ -42,15 +42,17 @@ public class SingleVisualizationController {
         // stnId 리스트 검색
         List<String> stationList = this.singleService.searchSondeStationList();
 
-        searchForm.setSearchDate("2021-06-15 18:00:00");
+        //searchForm.setSearchDate("2021-06-15 18:00:00"); //amsu-a
+        searchForm.setSearchDate("2020-06-01 06:00:00"); //sonde
         searchForm.setSearchType("1");
         searchForm.setChannelType("ob(1)");
-        searchForm.setStnId("");
+        searchForm.setStnId("1028"); //sonde test
         searchForm.setSondeList(null);
         searchForm.setSurfaceList(null);
         searchForm.setAmsuaList(null);
 
         model.addAttribute(searchForm);
+        model.addAttribute("errFlg",0);
         model.addAttribute("stationList", stationList);
         model.addAttribute("title", "단일종 시각화 화면");
 
@@ -83,16 +85,15 @@ public class SingleVisualizationController {
 
         } else if(searchType.equals("2") && !stnId.equals("") && !datetime.equals("")) {
             // SONDE 검색
-            System.out.println("yeee");
-            System.out.println(stnId);
-            // TODO:연직시각화
+            returnForm = this.singleService.searchSonde(datetime, stnId);
 
         } else if(searchType.equals("3") && !datetime.equals("")) {
             // SURFACE 검색
             returnForm = this.singleService.searchSurface(datetime);
 
         } else {
-            model.addAttribute("errFlg",1);
+            // 검색조건 에러
+            model.addAttribute("errFlg",true);
             return searchForm;
         }
 

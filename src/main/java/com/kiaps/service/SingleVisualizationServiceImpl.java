@@ -52,6 +52,21 @@ public class SingleVisualizationServiceImpl implements SingleVisualizationServic
     }
 
     /*
+     * 단일종 시각화 화면 검색 처리-Sonde
+     * @param 검색조건
+     * @return SingleVisualizationSearchForm searchForm
+     * */
+    @Override
+    public SingleVisualizationSearchForm searchSonde(String datetime, String stnId) throws ParseException {
+
+        SingleVisualizationSearchForm returnForm = new SingleVisualizationSearchForm();
+
+        returnForm.setSondeList(this.singleRepository.findVerticalSondeData(datetime, stnId));
+
+        return returnForm;
+    }
+
+    /*
      * 단일종 시각화 화면 검색 처리-Amsu-A
      * @param 검색조건
      * @return SingleVisualizationSearchForm searchForm

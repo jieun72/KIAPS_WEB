@@ -7,6 +7,7 @@ $(document).ready(function(){
     // 화면 초기처리 : 로딩바, StnID드롭다운 숨김
     $('#loading').hide();
     $('#stationList').hide();
+    $('#zeroCount').hide();
 
     // 라디오버튼 변경 시
     $("input[name='searchType']:radio").change(function () {
@@ -41,7 +42,7 @@ $(document).ready(function(){
 
             if(searchType == '1') {
                 // AMSU-A
-                // 결과 데이터 배열 처리
+
                 const amsuaList = data.amsuaList;
 
                 // 차트 작성
@@ -50,9 +51,39 @@ $(document).ready(function(){
                 $('#echart_world').css("border","1px solid #111111");
             } else if(searchType == '2') {
                 // SONDE
+
+                $('#echart_graph').show();
+                $('#zeroCount').hide();
+
+                const sondeList = data.sondeList;
+
+                if(sondeList.length > 0) {
+
+                    let sondeArr = [];
+                    let max = 0;
+                    let min = 300;
+
+                    sondeList.forEach(obj => {
+                        sondeArr.push([obj.sondeTemp, obj.sondePressure]);
+                        if (obj.sondeTemp < min) {
+                            min = obj.sondeTemp;
+                        }
+                        if (obj.sondeTemp > max) {
+                            max = obj.sondeTemp;
+                        }
+                    });
+
+                    // 차트 작성
+                    setGraph(sondeArr, Math.floor(min), Math.ceil(max));
+                } else {
+                    $('#echart_graph').hide();
+                    $('#zeroCount').show();
+                }
+
+                $('#echart_world').hide();
             } else {
                 // SURFACE
-                // 결과 데이터 배열 처리
+
                 const surfaceList = data.surfaceList;
 
                 // 차트 작성
@@ -193,5 +224,137 @@ function setChart(resultList, type) {
             }),
             progressive: 2000
         }
+    });
+}
+
+// 연직 그래프 표시
+function setGraph(resultArr, min, max) {
+
+    var theme = {
+        color: [
+            '#26B99A', '#34495E', '#BDC3C7', '#3498DB',
+            '#9B59B6', '#8abb6f', '#759c6a', '#bfd3b7'
+        ],
+
+        title: {
+            x: 'center',
+            y: 'top',
+            itemGap: 20,
+            textStyle: {
+                fontWeight: 'bolder',
+                fontsize: 20
+            }
+        },
+
+        dataRange: {
+            color: ['#1f610a', '#97b58d']
+        },
+
+        toolbox: {
+            color: ['#408829', '#408829', '#408829', '#408829']
+        },
+
+        tooltip: {
+            backgroundColor: 'rgba(0,0,0,0.5)',
+            axisPointer: {
+                type: 'line',
+                lineStyle: {
+                    color: '#408829',
+                    type: 'dashed'
+                },
+                crossStyle: {
+                    color: '#408829'
+                },
+                shadowStyle: {
+                    color: 'rgba(200,200,200,0.3)'
+                }
+            }
+        },
+
+        grid: {
+            borderWidth: 0
+        },
+
+        categoryAxis: {
+            axisLine: {
+                lineStyle: {
+                    color: 'rgba(0,0,0,0.5)'
+                }
+            },
+            splitLine: {
+                lineStyle: {
+                    color: ['#eee']
+                }
+            }
+        },
+
+        valueAxis: {
+            axisLine: {
+                lineStyle: {
+                    color: 'rgba(0,0,0,0.5)'
+                }
+            },
+            splitArea: {
+                show: true,
+                areaStyle: {
+                    color: ['rgba(250,250,250,0.1)', 'rgba(200,200,200,0.1)']
+                }
+            },
+            splitLine: {
+                lineStyle: {
+                    color: ['#eee']
+                }
+            }
+        },
+        textStyle: {
+            fontFamily: 'Arial, Verdana, sans-serif'
+        }
+    };
+
+    var mychart = echarts.init($('#echart_graph')[0], theme);
+
+    mychart.setOption({
+        tooltip: {
+            trigger: 'axis',
+            showDelay: 0,
+            axisPointer: {
+                type: 'cross',
+                lineStyle: {
+                    type: 'dashed',
+                    width: 1
+                }
+            }
+        },
+        xAxis: {
+            type: 'value',
+            min: min,
+            max: max,
+            axisLabel: {
+                formatter: '{value}'
+            }
+        },
+        yAxis: {
+            type: 'value',
+            axisLine: { onZero: false },
+            axisLabel: {
+                formatter: '{value}'
+            },
+        },
+        series: [
+            {
+                type: 'line',
+                smooth: true,
+                tooltip: {
+                    trigger: 'item',
+                    formatter: function(params) {
+                        return ' T : ' + params.value[0] + ' / Presuure : ' + params.value[1] + ' ';
+                    },
+                    textStyle: {
+                        color: '#FFF'
+                    }
+                },
+                data: resultArr
+            }
+        ]
     });
 }

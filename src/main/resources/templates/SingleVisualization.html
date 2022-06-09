@@ -67,12 +67,15 @@
                 <input type="button" class="btn btn-primary" id="searchButton" value="검색" />
             </div>
             <br/><br/><br/>
-
+            <div th:if="${errFlg == true}">검색조건을 확인해주세요.</div>
+            <div class="alert alert-info" id="zeroCount">검색 결과가 없습니다.</div>
             <div class="loading-bar" id="loading"></div>
 
             <div id="resultArea">
                 <div style="width:100%;" id="echart_world" class="chartArea"></div>
+                <div style="width:100%;" id="echart_graph" class="chartArea"></div>
             </div>
+
         </form>
 
     </div>

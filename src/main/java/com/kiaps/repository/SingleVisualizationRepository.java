@@ -3,6 +3,7 @@ package com.kiaps.repository;
 import com.kiaps.embed.SurfaceKey;
 import com.kiaps.entity.Surface;
 import com.kiaps.vo.ResponseAmsuaVO;
+import com.kiaps.vo.ResponseSondeVO;
 import com.kiaps.vo.ResponseSurfaceVO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -59,4 +60,15 @@ public interface SingleVisualizationRepository extends JpaRepository<Surface, Su
             nativeQuery = true
     )
     List<String> findSondeStationList();
+
+    @Query(value=
+            "select T as sondeTemp, Pressure as sondePressure " +
+            "from sonde s " +
+            "where s.`datetime` = :datetime " +
+            "and s.StnID = :stnId " +
+            "and T <> -999.99 " +
+            "order by Pressure asc " ,
+            nativeQuery = true
+    )
+    List<ResponseSondeVO> findVerticalSondeData(String datetime, String stnId);
 }

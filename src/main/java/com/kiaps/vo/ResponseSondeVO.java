@@ -13,5 +13,5 @@ public interface ResponseSondeVO {
     Double getSondeTemp();
 
     /* 고도 */
-    Double getPressure();
+    Double getSondePressure();
 }

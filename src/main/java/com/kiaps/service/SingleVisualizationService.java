@@ -30,6 +30,13 @@ public interface SingleVisualizationService {
     SingleVisualizationSearchForm searchSurface(String datetime) throws ParseException;
 
     /*
+     * 단일종 시각화 화면 검색 처리-Sonde
+     * @param 검색조건
+     * @return SingleVisualizationSearchForm searchForm
+     * */
+    SingleVisualizationSearchForm searchSonde(String datetime, String stnId) throws ParseException;
+
+    /*
      * 단일종 시각화 화면 검색 처리-Amsu-A
      * @param 검색조건
      * @return SingleVisualizationSearchForm searchForm
