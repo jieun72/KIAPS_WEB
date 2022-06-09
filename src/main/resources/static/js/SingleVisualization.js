@@ -346,7 +346,7 @@ function setGraph(resultArr, min, max) {
             }
         },
         xAxis: {
-            name: 'temp.',
+            name: 'temp.(K)',
             type: 'value',
             boundaryGap: false,
             nameLocation: 'middle',
@@ -358,7 +358,7 @@ function setGraph(resultArr, min, max) {
             }
         },
         yAxis: {
-            name: 'Pressure',
+            name: 'Pressure(Pa)',
             type: 'value',
             nameLocation: 'middle',
             nameGap: 55,
