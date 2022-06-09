@@ -43,12 +43,22 @@ $(document).ready(function(){
             if(searchType == '1') {
                 // AMSU-A
 
+                $('#echart_graph').hide();
+                $('#zeroCount').hide();
+                $('#echart_world').show();
+
                 const amsuaList = data.amsuaList;
 
-                // 차트 작성
-                setChart(amsuaList, 1);
+                if(amsuaList != null && amsuaList.length > 0) {
+                    // 차트 작성
+                    setChart(amsuaList, 1);
 
-                $('#echart_world').css("border","1px solid #111111");
+                    $('#echart_world').css("border","1px solid #111111");
+                } else {
+                    $('#echart_world').hide();
+                    $('#zeroCount').show();
+                }
+
             } else if(searchType == '2') {
                 // SONDE
 
@@ -57,7 +67,7 @@ $(document).ready(function(){
 
                 const sondeList = data.sondeList;
 
-                if(sondeList.length > 0) {
+                if(sondeList != null && sondeList.length > 0) {
 
                     let sondeArr = [];
                     let max = 0;
@@ -81,15 +91,25 @@ $(document).ready(function(){
                 }
 
                 $('#echart_world').hide();
-            } else {
+            } else if(searchType == '3') {
                 // SURFACE
+
+                $('#echart_graph').hide();
+                $('#zeroCount').hide();
+                $('#echart_world').show();
 
                 const surfaceList = data.surfaceList;
 
-                // 차트 작성
-                setChart(surfaceList, 2);
+                if(surfaceList != null && surfaceList.length > 0) {
+                    // 차트 작성
+                    setChart(surfaceList, 2);
 
-                $('#echart_world').css("border","1px solid #111111");
+                    $('#echart_world').css("border","1px solid #111111");
+                } else {
+                    $('#echart_world').hide();
+                    $('#zeroCount').show();
+                }
+
             }
 
         }).fail(function (jqXHR, textStatus, errorThrown) {
@@ -326,7 +346,11 @@ function setGraph(resultArr, min, max) {
             }
         },
         xAxis: {
+            name: 'temp.',
             type: 'value',
+            boundaryGap: false,
+            nameLocation: 'middle',
+            nameGap: 25,
             min: min,
             max: max,
             axisLabel: {
@@ -334,7 +358,10 @@ function setGraph(resultArr, min, max) {
             }
         },
         yAxis: {
+            name: 'Pressure',
             type: 'value',
+            nameLocation: 'middle',
+            nameGap: 55,
             axisLine: { onZero: false },
             axisLabel: {
                 formatter: '{value}'

@@ -52,7 +52,6 @@ public class SingleVisualizationController {
         searchForm.setAmsuaList(null);
 
         model.addAttribute(searchForm);
-        model.addAttribute("errFlg",0);
         model.addAttribute("stationList", stationList);
         model.addAttribute("title", "단일종 시각화 화면");
 
@@ -91,10 +90,6 @@ public class SingleVisualizationController {
             // SURFACE 검색
             returnForm = this.singleService.searchSurface(datetime);
 
-        } else {
-            // 검색조건 에러
-            model.addAttribute("errFlg",true);
-            return searchForm;
         }
 
         searchForm.setSurfaceList(returnForm.getSurfaceList());
