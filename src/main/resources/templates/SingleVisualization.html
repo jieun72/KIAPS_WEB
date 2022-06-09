@@ -53,6 +53,15 @@
                         </select>
                     </td>
                 </tr>
+                <tr height="15" style="vertical-align: top;"  id="stationList">
+                    <td class="search-title">StnID </td>
+                    <td>
+                        <select class="form-select" th:field="*{stnId}">
+                            <option th:each="station : ${stationList}" th:value="${station}" th:text="${station}">
+                            </option>
+                        </select>
+                    </td>
+                </tr>
             </table>
             <div style="float: right">
                 <input type="button" class="btn btn-primary" id="searchButton" value="검색" />

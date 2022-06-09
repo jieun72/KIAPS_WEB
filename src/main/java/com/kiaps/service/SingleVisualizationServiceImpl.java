@@ -30,6 +30,17 @@ public class SingleVisualizationServiceImpl implements SingleVisualizationServic
     private final SingleVisualizationRepository singleRepository;
 
     @Override
+    public List<String> searchSondeStationList() throws ParseException {
+        List<String> resultList = this.singleRepository.findSondeStationList();
+        return resultList;
+    }
+
+    /*
+     * 단일종 시각화 화면 검색 처리-Surface
+     * @param 검색조건
+     * @return SingleVisualizationSearchForm searchForm
+     * */
+    @Override
     public final SingleVisualizationSearchForm searchSurface(String datetime) throws ParseException {
 
         SingleVisualizationSearchForm returnForm = new SingleVisualizationSearchForm();
@@ -40,6 +51,11 @@ public class SingleVisualizationServiceImpl implements SingleVisualizationServic
 
     }
 
+    /*
+     * 단일종 시각화 화면 검색 처리-Amsu-A
+     * @param 검색조건
+     * @return SingleVisualizationSearchForm searchForm
+     * */
     @Override
     public SingleVisualizationSearchForm searchAmsua(String datetime, String channelType) throws ParseException {
 

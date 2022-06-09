@@ -52,4 +52,11 @@ public interface SingleVisualizationRepository extends JpaRepository<Surface, Su
     )
     List<ResponseSurfaceVO> findAllSurfaceData(String datetime);
 
+    @Query(value =
+            "select StnID from station s " +
+            "where StnType ='SONDE' " +
+            "order by cast(StnID as UNSIGNED) asc ",
+            nativeQuery = true
+    )
+    List<String> findSondeStationList();
 }

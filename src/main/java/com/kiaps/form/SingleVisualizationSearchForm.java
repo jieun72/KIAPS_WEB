@@ -29,8 +29,11 @@ public class SingleVisualizationSearchForm {
     /* 검색조건-타입 */
     private String searchType;
 
-    /* 검색조건-채널 */
+    /* 검색조건-채널(AMSU-A) */
     private String channelType;
+
+    /* 검색조건-stnId(SONDE) */
+    private String stnId;
 
     /* surface 결과리스트 */
     private List<ResponseSurfaceVO> surfaceList;

@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import java.util.List;
 
 /**
  * author         : Jieun Lee
@@ -38,14 +39,19 @@ public class SingleVisualizationController {
             final SingleVisualizationSearchForm searchForm,
             final Model model) throws Exception {
 
+        // stnId 리스트 검색
+        List<String> stationList = this.singleService.searchSondeStationList();
+
         searchForm.setSearchDate("2021-06-15 18:00:00");
         searchForm.setSearchType("1");
         searchForm.setChannelType("ob(1)");
+        searchForm.setStnId("");
         searchForm.setSondeList(null);
         searchForm.setSurfaceList(null);
         searchForm.setAmsuaList(null);
 
         model.addAttribute(searchForm);
+        model.addAttribute("stationList", stationList);
         model.addAttribute("title", "단일종 시각화 화면");
 
         return "SingleVisualization";
@@ -67,18 +73,27 @@ public class SingleVisualizationController {
         String datetime = searchForm.getSearchDate();
         String searchType = searchForm.getSearchType();
         String channelType = searchForm.getChannelType();
+        String stnId = searchForm.getStnId();
 
         SingleVisualizationSearchForm returnForm = new SingleVisualizationSearchForm();
         // 검색조건 체크
         if(searchType.equals("1") && !channelType.equals("")) {
             // AMSU-A 검색
             returnForm = this.singleService.searchAmsua(datetime, channelType);
-        } else if(searchType.equals("2")) {
+
+        } else if(searchType.equals("2") && !stnId.equals("") && !datetime.equals("")) {
             // SONDE 검색
+            System.out.println("yeee");
+            System.out.println(stnId);
             // TODO:연직시각화
-        } else {
+
+        } else if(searchType.equals("3") && !datetime.equals("")) {
             // SURFACE 검색
             returnForm = this.singleService.searchSurface(datetime);
+
+        } else {
+            model.addAttribute("errFlg",1);
+            return searchForm;
         }
 
         searchForm.setSurfaceList(returnForm.getSurfaceList());

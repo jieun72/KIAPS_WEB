@@ -3,6 +3,7 @@ package com.kiaps.service;
 import com.kiaps.form.SingleVisualizationSearchForm;
 
 import java.text.ParseException;
+import java.util.List;
 
 /**
  * author         : Jieun Lee
@@ -14,6 +15,12 @@ import java.text.ParseException;
  * 2022/06/03        Jieun Lee          최초 생성
  */
 public interface SingleVisualizationService {
+
+    /*
+     * 단일종 시각화 화면 초기화-Sonde Station
+     * @return List<String>
+     * */
+    List<String> searchSondeStationList() throws ParseException;
 
     /*
     * 단일종 시각화 화면 검색 처리-Surface

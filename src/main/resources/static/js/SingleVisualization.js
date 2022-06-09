@@ -4,18 +4,26 @@ $(document).ready(function(){
     $("#menuTypes").removeClass("active");
     $("#singleVisualization").addClass("active");
 
-    // 화면 초기처리 : 로딩바, 채널조건 숨김
+    // 화면 초기처리 : 로딩바, StnID드롭다운 숨김
     $('#loading').hide();
-    $('#channelList').hide();
+    $('#stationList').hide();
 
-    // AMSU-A 선택 시 채널조건 표시
+    // 라디오버튼 변경 시
     $("input[name='searchType']:radio").change(function () {
         var radioVal = this.value;
         
         if(radioVal == '1') {
+            // AMSU-A 선택 시
             $('#channelList').show();
-        } else {
+            $('#stationList').hide();
+        } else if(radioVal == '2') {
+            // SONDE 선택 시
             $('#channelList').hide();
+            $('#stationList').show();
+        } else {
+            // SURFACE 선택 시
+            $('#channelList').hide();
+            $('#stationList').hide();
         }
     });
 
@@ -59,6 +67,7 @@ $(document).ready(function(){
     });
 });
 
+// 지도 차트 표시
 function setChart(resultList, type) {
 
     const projection = d3.geoProjection((x, y) => ([x, y / 0.75])).rotate([-180, 0]);
