@@ -42,9 +42,10 @@ public interface ObsVisualizationRepository extends JpaRepository<Surface, Surfa
             "select s3.nobs as nobs," +
             "       max(s3.Pressure) as pr " +
             "from sonde s3 " +
-            "where T != -999.99 " +
+            "where s3.T != -999.99 " +
             "group by s3.nobs) b " +
             "on s2.nobs = b.nobs and s2.Pressure = b.pr " +
+            "and s2.T != -999.99 " +
             "and s2.`datetime` = :datetime",
             nativeQuery = true
     )

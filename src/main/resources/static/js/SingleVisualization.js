@@ -217,6 +217,11 @@ function setChart(resultList, type) {
         },
         series: {
             type: 'scatter',
+            itemStyle: {
+                normal: {
+                    opacity: 0.2
+                }
+            },
             coordinateSystem: 'geo',
             symbolSize: 3,
             roam: false,
