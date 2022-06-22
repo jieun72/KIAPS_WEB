@@ -42,11 +42,11 @@ public class SingleVisualizationController {
         // stnId 리스트 검색
         List<String> stationList = this.singleService.searchSondeStationList();
 
-        //searchForm.setSearchDate("2021-06-15 18:00:00"); //amsu-a
-        searchForm.setSearchDate("2020-06-01 06:00:00"); //sonde
+        searchForm.setSearchDate("2021-06-16 00:00:00"); //amsu-a
+        //searchForm.setSearchDate("2020-06-01 06:00:00"); //sonde
         searchForm.setSearchType("1");
         searchForm.setChannelType("ob(1)");
-        searchForm.setStnId("1028"); //sonde test
+        searchForm.setStnId("24641"); //sonde test
         searchForm.setSondeList(null);
         searchForm.setSurfaceList(null);
         searchForm.setAmsuaList(null);

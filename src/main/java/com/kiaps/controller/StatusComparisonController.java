@@ -38,8 +38,8 @@ public class StatusComparisonController {
             final StatusComparisonSearchForm searchForm,
             final Model model) throws Exception {
 
-        searchForm.setFromDate("2020-06-16");
-        searchForm.setToDate("2020-06-19");
+        searchForm.setFromDate("2021-06-15");
+        searchForm.setToDate("2021-06-19");
         searchForm.setSurfaceList(null);
         searchForm.setSurfaceList2(null);
 

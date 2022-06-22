@@ -42,7 +42,7 @@ public class ObsVisualizationController {
             final ObsVisualizationSearchForm searchForm,
             final Model model) throws Exception {
 
-        searchForm.setSearchDate("2020-06-01 06:00:00");
+        searchForm.setSearchDate("2021-06-17 00:00:00");
         searchForm.setSearchType("1");
         searchForm.setSondeList(null);
         searchForm.setSurfaceList(null);
