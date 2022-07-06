@@ -15,6 +15,7 @@ import java.text.ParseException;
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------
  * 2022/05/24        Jieun Lee          최초 생성
+ * 2022/06/23        Jieun Lee          AI QC, KPOP QC 검색기능 구현
  */
 @RequiredArgsConstructor
 @Service
@@ -27,8 +28,18 @@ public class StatusComparisonServiceImpl implements StatusComparisonService {
 
         StatusComparisonSearchForm returnForm = new StatusComparisonSearchForm();
 
-        returnForm.setSurfaceList(this.stcRepository.findAllCount1(fromDate, toDate));
-        returnForm.setSurfaceList2(this.stcRepository.findAllCount2(fromDate, toDate));
+        // 일별 전체 관측자료수
+        returnForm.setSondeTotalList(this.stcRepository.findSondeTotalCount(fromDate, toDate));
+
+        // 일별 KPOP QC 통과 자료수
+        returnForm.setKpopQCList(this.stcRepository.findKpopQCCount(fromDate, toDate));
+
+        // 일별 AI QC 통과 자료수
+        returnForm.setAiQCList(this.stcRepository.findAiQCCount(fromDate, toDate));
+
+        // 일별 AI QC 제외 자료수
+        returnForm.setSondeOnlyKpopList(this.stcRepository.findOnlyKpopCount(fromDate, toDate));
+
 
         return returnForm;
 

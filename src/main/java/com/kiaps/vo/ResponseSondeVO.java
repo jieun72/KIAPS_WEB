@@ -14,4 +14,10 @@ public interface ResponseSondeVO {
 
     /* 고도 */
     Double getSondePressure();
+
+    /* 날짜시간 */
+    String getDateTime();
+
+    /* 자료수 */
+    Integer getCount();
 }

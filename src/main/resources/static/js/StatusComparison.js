@@ -16,22 +16,47 @@ $(document).ready(function(){
             data: $("#searchForm").serialize()
 
         }).done(function (data, textStatus, jqXHR) {
-            const surfaceList = data.surfaceList;
-            const surfaceList2 = data.surfaceList2;
+            // const surfaceList = data.surfaceList;
+            // const surfaceList2 = data.surfaceList2;
+            //
+            // let dateArr = [];
+            // let surfaceArr = [];
+            // surfaceList.forEach(obj => {
+            //     dateArr.push([obj.dateTime])
+            //     surfaceArr.push(obj.count);
+            // });
+            //
+            // let surfaceArr2 = [];
+            // surfaceList2.forEach(obj => {
+            //     surfaceArr2.push(obj.count);
+            // });
+            const sondeTotalList = data.sondeTotalList;
+            const kpopQCList = data. kpopQCList;
+            const aiQCList = data.aiQCList;
+            const sondeOnlyKpopList = data.sondeOnlyKpopList;
 
-            let dateArr = [];
-            let surfaceArr = [];
-            surfaceList.forEach(obj => {
-                dateArr.push([obj.dateTime])
-                surfaceArr.push(obj.count);
+            let sondeTotalArr = [];
+            let kpopQCArr = [];
+            let aiQCArr = [];
+            let sondeOnlyKpopArr = [];
+
+            sondeTotalList.forEach(obj => {
+                sondeTotalArr.push([obj.dateTime,obj.count]);
             });
 
-            let surfaceArr2 = [];
-            surfaceList2.forEach(obj => {
-                surfaceArr2.push(obj.count);
+            kpopQCList.forEach(obj => {
+                kpopQCArr.push([obj.dateTime,obj.count]);
             });
 
-            setChart('surface 원시데이터 vs QC', dateArr, surfaceArr, surfaceArr2);
+            aiQCList.forEach(obj => {
+                aiQCArr.push([obj.dateTime,obj.count]);
+            });
+
+            sondeOnlyKpopList.forEach(obj => {
+                sondeOnlyKpopArr.push([obj.dateTime,obj.count]);
+            });
+
+            setChart('AI QC vs KPOP QC 자료수 비교', sondeTotalArr, kpopQCArr, aiQCArr, sondeOnlyKpopArr);
 
         }).fail(function (jqXHR, textStatus, errorThrown) {
             alert(textStatus + jqXHR);
@@ -39,11 +64,11 @@ $(document).ready(function(){
     });
 });
 
-function setChart(title, dateArr, surfaceArr, surfaceArr2) {
+function setChart(title, sondeTotalArr, kpopQCArr, aiQCArr, sondeOnlyKpopArr) {
 
     var theme = {
         color: [
-            '#26B99A', '#34495E', '#BDC3C7', '#3498DB',
+            '#26B99A', '#34495E', '#3498DB', '#BDC3C7',
             '#9B59B6', '#8abb6f', '#759c6a', '#bfd3b7'
         ],
 
@@ -58,7 +83,7 @@ function setChart(title, dateArr, surfaceArr, surfaceArr2) {
         },
 
         dataRange: {
-            color: ['#1f610a', '#97b58d']
+            color: ['#1f610a', '#97b58d', '#bfd3b7', '#ffffff']
         },
 
         toolbox: {
@@ -137,7 +162,8 @@ function setChart(title, dateArr, surfaceArr, surfaceArr2) {
         legend: {
             x: 220,
             y: 40,
-            data: ['원시데이터', 'QC데이터']
+            data: ['일별 전체 관측 자료', '일별 KPOP QC 통과 자료',
+                   '일별 AI QC 통과 자료', '일별 AI QC 제외 관측 자료']
         },
         toolbox: {
             show: true,
@@ -167,7 +193,6 @@ function setChart(title, dateArr, surfaceArr, surfaceArr2) {
             boundaryGap: false,
             nameLocation: 'middle',
             nameGap: 25,
-            data: dateArr
         }],
         yAxis: [{
             type: 'value',
@@ -179,29 +204,25 @@ function setChart(title, dateArr, surfaceArr, surfaceArr2) {
             }
         }],
         series: [{
-            name: '원시데이터',
+            name: '일별 전체 관측 자료',
             type: 'line',
             smooth: true,
-            itemStyle: {
-                normal: {
-                    areaStyle: {
-                        type: 'default'
-                    }
-                }
-            },
-            data: surfaceArr
+            data: sondeTotalArr
         }, {
-            name: 'QC데이터',
+            name: '일별 KPOP QC 통과 자료',
             type: 'line',
             smooth: true,
-            itemStyle: {
-                normal: {
-                    areaStyle: {
-                        type: 'default'
-                    }
-                }
-            },
-            data: surfaceArr2
+            data: kpopQCArr
+        }, {
+            name: '일별 AI QC 통과 자료',
+            type: 'line',
+            smooth: true,
+            data: aiQCArr
+        }, {
+            name: '일별 AI QC 제외 관측 자료',
+            type: 'line',
+            smooth: true,
+            data: sondeOnlyKpopArr
         }]
     });
 }

@@ -34,4 +34,16 @@ public class StatusComparisonSearchForm {
     /* surface 결과리스트2 */
     private List<ResponseSurfaceVO> surfaceList2;
 
+    /* sonde 전체 관측 자료수 리스트 */
+    private List<ResponseSondeVO> sondeTotalList;
+
+    /* sonde KPOP QC 통과 리스트 */
+    private List<ResponseSondeVO> kpopQCList;
+
+    /* sonde AI QC 통과 리스트 */
+    private List<ResponseSondeVO> aiQCList;
+
+    /* sonde AI QC제외 관측 자료수 리스트 */
+    private List<ResponseSondeVO> sondeOnlyKpopList;
+
 }

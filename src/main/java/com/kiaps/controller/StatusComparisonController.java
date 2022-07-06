@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------
  * 2022/05/24        Jieun Lee          최초 생성
+ * 2022/06/23        Jieun Lee          AI QC, KPOP QC 검색기능 구현
  */
 @RequiredArgsConstructor
 @Controller
@@ -38,8 +39,8 @@ public class StatusComparisonController {
             final StatusComparisonSearchForm searchForm,
             final Model model) throws Exception {
 
-        searchForm.setFromDate("2021-06-15");
-        searchForm.setToDate("2021-06-19");
+        searchForm.setFromDate("2021-06-16 00:00:00");
+        searchForm.setToDate("2021-07-28 00:00:00");
         searchForm.setSurfaceList(null);
         searchForm.setSurfaceList2(null);
 
@@ -68,8 +69,10 @@ public class StatusComparisonController {
 
         StatusComparisonSearchForm returnForm = this.stcService.searchStatusComparison(fromDate, toDate);
 
-        searchForm.setSurfaceList(returnForm.getSurfaceList());
-        searchForm.setSurfaceList2(returnForm.getSurfaceList2());
+        searchForm.setSondeTotalList(returnForm.getSondeTotalList());
+        searchForm.setAiQCList(returnForm.getAiQCList());
+        searchForm.setKpopQCList(returnForm.getKpopQCList());
+        searchForm.setSondeOnlyKpopList(returnForm.getSondeOnlyKpopList());
 
         model.addAttribute(searchForm);
 
