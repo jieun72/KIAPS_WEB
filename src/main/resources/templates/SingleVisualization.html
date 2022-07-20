@@ -56,13 +56,14 @@
                 <tr height="15" style="vertical-align: top;"  id="stationList">
                     <td class="search-title">StnID </td>
                     <td>
-                        <select class="form-select" th:field="*{stnId}">
-                            <option th:each="station : ${stationList}" th:value="${station}" th:text="${station}">
-                            </option>
-                        </select>
+                        <span id="selectedStation"></span>
+                        <input type="hidden" id="stnId" th:field="*{stnId}">
                     </td>
                 </tr>
             </table>
+            <div id="sondeSearchType">
+                <div style="width:100%;" id="stationMap"></div><br/>
+            </div>
             <div style="float: right">
                 <input type="button" class="btn btn-primary" id="searchButton" value="검색" />
             </div>

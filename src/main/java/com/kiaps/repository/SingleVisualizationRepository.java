@@ -4,6 +4,7 @@ import com.kiaps.embed.SurfaceKey;
 import com.kiaps.entity.Surface;
 import com.kiaps.vo.ResponseAmsuaVO;
 import com.kiaps.vo.ResponseSondeVO;
+import com.kiaps.vo.ResponseStationVO;
 import com.kiaps.vo.ResponseSurfaceVO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -54,12 +55,12 @@ public interface SingleVisualizationRepository extends JpaRepository<Surface, Su
     List<ResponseSurfaceVO> findAllSurfaceData(String datetime);
 
     @Query(value =
-            "select StnID from station s " +
+            "select lat, lon, StnID as stnId from station s " +
             "where StnType ='SONDE' " +
             "order by cast(StnID as UNSIGNED) asc ",
             nativeQuery = true
     )
-    List<String> findSondeStationList();
+    List<ResponseStationVO> findSondeStationList();
 
     @Query(value=
             "select T as sondeTemp, Pressure as sondePressure " +

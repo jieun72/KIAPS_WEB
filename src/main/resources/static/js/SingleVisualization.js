@@ -1,5 +1,8 @@
 $(document).ready(function(){
 
+    // SONDE:검색 조건용 리스트
+    let stnList;
+
     // 화면 초기처리 : 버튼 활성화
     $("#menuTypes").removeClass("active");
     $("#singleVisualization").addClass("active");
@@ -9,7 +12,7 @@ $(document).ready(function(){
     $('#stationList').hide();
     $('#zeroCount').hide();
 
-    // 라디오버튼 변경 시
+    // 라디오버튼 변경 이벤트
     $("input[name='searchType']:radio").change(function () {
         var radioVal = this.value;
         
@@ -17,18 +20,84 @@ $(document).ready(function(){
             // AMSU-A 선택 시
             $('#channelList').show();
             $('#stationList').hide();
+            $("#stationMap").removeClass("chartArea");
+            $("#sondeSearchType").hide();
+            $("#echart_world").show();
+            $("#echart_graph").hide();
+
         } else if(radioVal == '2') {
             // SONDE 선택 시
             $('#channelList').hide();
             $('#stationList').show();
+            $("#stationMap").addClass("chartArea");
+            $("#sondeSearchType").show();
+            $("#echart_world").hide();
+            $("#echart_graph").show();
+
+            if(stnList == null || stnList.length < 1) {
+
+                // Station 검색처리
+                $.ajax({
+                    url: "/singleVisualization/findStnList",
+                    type: "GET",
+                    data: $("#searchForm").serialize()
+                }).done(function (data, textStatus, jqXHR) {
+                    stnList = data.stnList;
+
+                    setStationMap(stnList);
+                }).fail(function (jqXHR, textStatus, errorThrown) {
+                    alert(textStatus + jqXHR);
+                });
+            } else {
+                setStationMap(stnList);
+            }
+
+            $('#stationMap').css("border","1px solid #111111");
+
         } else {
             // SURFACE 선택 시
             $('#channelList').hide();
             $('#stationList').hide();
+            $("#stationMap").removeClass("chartArea");
+            $("#sondeSearchType").hide();
+            $("#echart_world").show();
+            $("#echart_graph").hide();
+
         }
     });
 
+    // 검색 버튼 이벤트
     $(document).on('click', '#searchButton', function(){
+
+        var searchType = $(':radio[name="searchType"]:checked').val();
+
+        // 검색 조건 필수 체크
+        if(searchType == '1') {
+            // AMSU-A
+            if($('#searchDate').val() == '' || $('#searchDate').val() == null) {
+                alert("검색날짜를 입력해주세요.");
+                return false;
+            }
+
+        } else if(searchType == '2') {
+            // SONDE
+            if($('#searchDate').val() == '' || $('#searchDate').val() == null) {
+                alert("검색날짜를 입력해주세요.");
+                return false;
+            }
+
+            if($('#selectedStation').text() == '' || $('#selectedStation').text() == null) {
+                alert("StnID를 선택해주세요.");
+                return false;
+            }
+
+        } else if(searchType == '3') {
+            // SURFACE
+            if($('#searchDate').val() == '' || $('#searchDate').val() == null) {
+                alert("검색날짜를 입력해주세요.");
+                return false;
+            }
+        }
 
         // 검색처리
         $.ajax({
@@ -37,8 +106,6 @@ $(document).ready(function(){
             data: $("#searchForm").serialize()
 
         }).done(function (data, textStatus, jqXHR) {
-
-            var searchType = $(':radio[name="searchType"]:checked').val();
 
             if(searchType == '1') {
                 // AMSU-A
@@ -118,7 +185,7 @@ $(document).ready(function(){
     });
 });
 
-// 지도 차트 표시
+// AMSU-A,SURFACE:지도 차트 표시
 function setChart(resultList, type) {
 
     const projection = d3.geoProjection((x, y) => ([x, y / 0.75])).rotate([-180, 0]);
@@ -252,7 +319,7 @@ function setChart(resultList, type) {
     });
 }
 
-// 연직 그래프 표시
+// SONDE:검색 결과 연직 그래프 표시
 function setGraph(resultArr, min, max) {
 
     var theme = {
@@ -389,4 +456,132 @@ function setGraph(resultArr, min, max) {
             }
         ]
     });
+}
+
+// SONDE:검색 조건 stnID 지도 표시 처리
+function setStationMap(stnList) {
+
+    const projection = d3.geoProjection((x, y) => ([x, y / 0.75])).rotate([-180, 0]);
+
+    var mychart = echarts.init($('#stationMap')[0]);
+
+    option = {
+        backgroundColor: '#fff',
+        toolbox: {
+            color: ['#408829', '#408829', '#408829', '#408829'],
+            show: true,
+            orient: 'horizontal',
+            x: 'right',
+            y: 'top',
+            feature: {
+                mark: {
+                    show: true
+                },
+                restore: {
+                    show: true,
+                    title: 'Reset',
+                    onclick: function () {
+                        alert("myToolHandler1");
+                    }
+                }
+            }
+        },
+        tooltip : {
+            trigger: 'item',
+            backgroundColor: 'rgba(0,0,0,0.5)',
+            borderColor: '#34495E',
+            textStyle: {
+                color: '#FFF'
+            },
+            formatter : function (params) {
+                var val = params.value;
+                return val[2] + '<br/> 위도 : ' + val[1] + ' / 경도 : ' + val[0];
+            }
+        },
+        geo: {
+            type: 'map',
+            projection: {
+                project: (point) => projection(point),
+                unproject: (point) => projection.invert(point),
+                stream: projection.stream
+            },
+            map: 'world',
+            roam: true,            // 줌조작 비활성화
+            zoom: 1.2,
+            silent: true,           // 지도화면조작 비활성화
+            emphasis : {
+                disable: true       // 국가 선택 비활성화
+            },
+            itemStyle: {
+                normal: {
+                    areaColor: '#fff',
+                    borderColor: 'rgba(0,0,0,0.5)'
+                }
+            },
+            selectedMode: 'single',
+
+        },
+        series: {
+            type: 'scatter',
+            coordinateSystem: 'geo',
+            symbolSize: 3,
+            roam: false,
+            mapLocation: {
+                y: 60
+            },
+            label: {
+                show: true,
+                borderColor: '#999',
+                borderWidth: 0.5,
+                borderRadius: 2,
+                backgroundColor: '#fff',
+                padding: [3, 5],
+                fontSize: 10,
+                opacity: 1,
+                color: '#333'
+            },
+            encode: {
+                label: 2
+            },
+            selectedMode: 'single',
+            select: {
+                label: {
+                    color: '#fff',
+                    borderColor: '#555',
+                    backgroundColor: '#555'
+                }
+            },
+            data: stnList.map(function (itemOpt) {
+                return {
+                    value: [
+                        itemOpt.lon,
+                        itemOpt.lat,
+                        itemOpt.stnId
+                    ]
+                };
+            }),
+            progressive: 2000
+        }
+    };
+
+    mychart.setOption(option);
+    
+    // stnID 변경 이벤트
+    mychart.on('selectchanged', function (params) {
+
+        var btnDataIdx = params.selected[0].dataIndex[0];
+        var stnInfo = option.series.data[btnDataIdx];
+        var name = stnInfo.value[2];
+
+        $('#selectedStation').text(name);
+        $('#stnId').val(name);
+
+    });
+
+    // 리셋 버튼 이벤트
+    mychart.on('restore', function () {
+        $('#selectedStation').text('');
+        $('#stnId').val('');
+    });
+
 }

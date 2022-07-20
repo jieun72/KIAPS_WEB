@@ -3,6 +3,7 @@ package com.kiaps.service;
 import com.kiaps.form.SingleVisualizationSearchForm;
 import com.kiaps.repository.SingleVisualizationRepository;
 import com.kiaps.vo.ResponseAmsuaVO;
+import com.kiaps.vo.ResponseStationVO;
 import lombok.RequiredArgsConstructor;
 import org.qlrm.mapper.JpaResultMapper;
 import org.springframework.stereotype.Service;
@@ -30,8 +31,8 @@ public class SingleVisualizationServiceImpl implements SingleVisualizationServic
     private final SingleVisualizationRepository singleRepository;
 
     @Override
-    public List<String> searchSondeStationList() throws ParseException {
-        List<String> resultList = this.singleRepository.findSondeStationList();
+    public List<ResponseStationVO> searchSondeStationList() throws ParseException {
+        List<ResponseStationVO> resultList = this.singleRepository.findSondeStationList();
         return resultList;
     }
 

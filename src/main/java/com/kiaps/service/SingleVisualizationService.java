@@ -1,6 +1,7 @@
 package com.kiaps.service;
 
 import com.kiaps.form.SingleVisualizationSearchForm;
+import com.kiaps.vo.ResponseStationVO;
 
 import java.text.ParseException;
 import java.util.List;
@@ -18,9 +19,9 @@ public interface SingleVisualizationService {
 
     /*
      * 단일종 시각화 화면 초기화-Sonde Station
-     * @return List<String>
+     * @return List<ResponseStationVO>
      * */
-    List<String> searchSondeStationList() throws ParseException;
+    List<ResponseStationVO> searchSondeStationList() throws ParseException;
 
     /*
     * 단일종 시각화 화면 검색 처리-Surface

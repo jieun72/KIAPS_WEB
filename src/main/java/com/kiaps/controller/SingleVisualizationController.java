@@ -2,6 +2,7 @@ package com.kiaps.controller;
 
 import com.kiaps.form.SingleVisualizationSearchForm;
 import com.kiaps.service.SingleVisualizationService;
+import com.kiaps.vo.ResponseStationVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,9 +40,6 @@ public class SingleVisualizationController {
             final SingleVisualizationSearchForm searchForm,
             final Model model) throws Exception {
 
-        // stnId 리스트 검색
-        List<String> stationList = this.singleService.searchSondeStationList();
-
         searchForm.setSearchDate("2021-06-16 00:00:00"); //amsu-a
         //searchForm.setSearchDate("2020-06-01 06:00:00"); //sonde
         searchForm.setSearchType("1");
@@ -50,14 +48,35 @@ public class SingleVisualizationController {
         searchForm.setSondeList(null);
         searchForm.setSurfaceList(null);
         searchForm.setAmsuaList(null);
+        searchForm.setStnList(null);
 
         model.addAttribute(searchForm);
-        model.addAttribute("stationList", stationList);
         model.addAttribute("title", "단일종 시각화 화면");
 
         return "SingleVisualization";
     }
 
+    /*
+     * GET 리퀘스트 (Sonde-Station 검색)
+     * @param SingleVisualizationSearchForm searchForm
+     * @param Model model
+     * @return SingleVisualizationSearchForm searchForm
+     * @throws Exception 예외
+     * */
+    @RequestMapping(method = RequestMethod.GET, value = "/findStnList")
+    public @ResponseBody SingleVisualizationSearchForm  searchStation(
+            final SingleVisualizationSearchForm searchForm,
+            final Model model) throws Exception {
+
+        // stnId 리스트 검색
+        List<ResponseStationVO> stationList = this.singleService.searchSondeStationList();
+        searchForm.setStnList(stationList);
+
+        model.addAttribute(searchForm);
+
+        return searchForm;
+    }
+    
     /*
     * POST 리퀘스트 (검색)
     * @param SingleVisualizationSearchForm searchForm

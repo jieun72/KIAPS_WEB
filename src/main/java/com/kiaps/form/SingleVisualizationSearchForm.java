@@ -2,6 +2,7 @@ package com.kiaps.form;
 
 import com.kiaps.vo.ResponseAmsuaVO;
 import com.kiaps.vo.ResponseSondeVO;
+import com.kiaps.vo.ResponseStationVO;
 import com.kiaps.vo.ResponseSurfaceVO;
 import lombok.*;
 
@@ -43,5 +44,8 @@ public class SingleVisualizationSearchForm {
 
     /* amsua 결과리스트 */
     private List<ResponseAmsuaVO> amsuaList;
+
+    /* station 리스트 */
+    private List<ResponseStationVO> stnList;
 
 }
