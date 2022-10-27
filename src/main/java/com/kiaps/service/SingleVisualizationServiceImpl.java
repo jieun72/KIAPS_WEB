@@ -82,7 +82,7 @@ public class SingleVisualizationServiceImpl implements SingleVisualizationServic
         Query q = em.createNativeQuery(
                 "select lat as amsuaLat, "+
                 "lon as amsuaLon, `" + channelType + "` as amsuaTemp " +
-                "from amsua " +
+                "from amsua_grqc " +
                 "where `datetime` = :datetime " +
                 "and `" + channelType +"` <> -999.99 ")
                 .setParameter("datetime", datetime);
