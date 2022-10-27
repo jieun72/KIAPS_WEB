@@ -43,14 +43,15 @@ public interface SingleVisualizationRepository extends JpaRepository<Surface, Su
             + "    WHEN :#{#channelType} = 'ob(15)' THEN `ob(15)`\n"
             + "END)";
 
-    @Query(
+    @Query(value =
             "select " +
             "   s1.lat as surfaceLat, " +
             "   s1.lon as surfaceLon, " +
-            "   s1.t2m as surfaceTemp " +
-            "from Surface s1 " +
-            "where s1.t2m <> -999.99 " +
-            "and s1.surfaceKey.datetime = :datetime"
+            "   s1.T2m as surfaceTemp " +
+            "from surface_grqc s1 " +
+            "where s1.T2m <> -999.99 " +
+            "and s1.`datetime` = :datetime",
+            nativeQuery = true
     )
     List<ResponseSurfaceVO> findAllSurfaceData(String datetime);
 
@@ -62,9 +63,9 @@ public interface SingleVisualizationRepository extends JpaRepository<Surface, Su
     )
     List<ResponseStationVO> findSondeStationList();
 
-    @Query(value=
+    @Query(value =
             "select T as sondeTemp, Pressure as sondePressure " +
-            "from sonde s " +
+            "from sonde_grqc s " +
             "where s.`datetime` = :datetime " +
             "and s.StnID = :stnId " +
             "and T <> -999.99 " +

@@ -22,13 +22,14 @@ import java.util.List;
 @Repository
 public interface ObsVisualizationRepository extends JpaRepository<Surface, SurfaceKey> {
 
-    @Query(
+    @Query(value =
             "select " +
             "   s1.lat as surfaceLat, " +
-            "   s1.t2m as surfaceTemp " +
-            "from Surface s1 " +
-            "where s1.t2m <> -999.99 " +
-            "and s1.surfaceKey.datetime = :datetime"
+            "   s1.T2m as surfaceTemp " +
+            "from surface_grqc s1 " +
+            "where s1.T2m  <> -999.99 " +
+            "and s1.`datetime` = :datetime",
+            nativeQuery = true
     )
     List<ResponseSurfaceVO> findAllSurfaceData(String datetime);
 
@@ -37,11 +38,11 @@ public interface ObsVisualizationRepository extends JpaRepository<Surface, Surfa
             "   s2.lat as sondeLat, " +
             "   s2.lon as sondeLon, " +
             "   s2.T as sondeTemp " +
-            "from sonde s2 " +
+            "from sonde_grqc s2 " +
             "inner join (" +
             "select s3.nobs as nobs," +
             "       max(s3.Pressure) as pr " +
-            "from sonde s3 " +
+            "from sonde_grqc s3 " +
             "where s3.T != -999.99 " +
             "group by s3.nobs) b " +
             "on s2.nobs = b.nobs and s2.Pressure = b.pr " +
