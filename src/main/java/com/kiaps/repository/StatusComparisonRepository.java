@@ -24,7 +24,7 @@ public interface StatusComparisonRepository extends JpaRepository<Surface, Surfa
 
     @Query(value=
             "select DATE_FORMAT(ObsTime , '%Y/%m/%d') as dateTime, count(*) as count " +
-            "from sonde_kpop_qc " +
+            "from sonde_innoqc " +
             "where ObsTime BETWEEN :fromDate and :toDate " +
             "group by DATE_FORMAT(ObsTime , '%Y/%m/%d') " +
             "order by DATE_FORMAT(ObsTime , '%Y/%m/%d') asc",
@@ -34,8 +34,8 @@ public interface StatusComparisonRepository extends JpaRepository<Surface, Surfa
 
     @Query(value=
             "select DATE_FORMAT(ObsTime , '%Y/%m/%d') as dateTime, count(*) as count " +
-            "from sonde_kpop_qc " +
-            "where KPOP_QC = 'P' and ObsTime BETWEEN :fromDate and :toDate " +
+            "from sonde_innoqc " +
+            "where T_KPOP_QC = 0 and ObsTime BETWEEN :fromDate and :toDate " +
             "group by DATE_FORMAT(ObsTime , '%Y/%m/%d') " +
             "order by DATE_FORMAT(ObsTime , '%Y/%m/%d') asc",
             nativeQuery = true
@@ -44,8 +44,8 @@ public interface StatusComparisonRepository extends JpaRepository<Surface, Surfa
 
     @Query(value=
             "select DATE_FORMAT(ObsTime , '%Y/%m/%d') as dateTime, count(*) as count " +
-            "from sonde_ai_qc " +
-            "where AI_QC_PASS = 'P' and ObsTime BETWEEN :fromDate and :toDate " +
+            "from sonde_innoqc " +
+            "where T_AI_QC = 0 and ObsTime BETWEEN :fromDate and :toDate " +
             "group by DATE_FORMAT(ObsTime , '%Y/%m/%d') " +
             "order by DATE_FORMAT(ObsTime , '%Y/%m/%d') asc",
             nativeQuery = true
@@ -53,16 +53,11 @@ public interface StatusComparisonRepository extends JpaRepository<Surface, Surfa
     List<ResponseSondeVO> findAiQCCount(String fromDate, String toDate);
 
     @Query(value=
-            "select c.obs as datetime, cnt2-cnt1 as count from ( " +
-            "   select DATE_FORMAT(a.ObsTime, '%Y/%m/%d') as obs, count(*) as cnt1 " +
-            "   from sonde_ai_qc a " +
-            "   where a.ObsTime BETWEEN :fromDate and :toDate " +
-            "   group by DATE_FORMAT(a.ObsTime, '%Y/%m/%d')) c, ( " +
-            "   select DATE_FORMAT(b.ObsTime, '%Y/%m/%d') as obs, count(*) as cnt2 " +
-            "   from sonde_kpop_qc b " +
-            "   where b.ObsTime BETWEEN :fromDate and :toDate " +
-            "   group by DATE_FORMAT(b.ObsTime, '%Y/%m/%d')) d " +
-            "where c.obs = d.obs",
+            "select DATE_FORMAT(ObsTime , '%Y/%m/%d') as dateTime, count(*) as count " +
+            "from sonde_innoqc " +
+            "where T_AI_QC is null and ObsTime BETWEEN :fromDate and :toDate " +
+            "group by DATE_FORMAT(ObsTime , '%Y/%m/%d') " +
+            "order by DATE_FORMAT(ObsTime , '%Y/%m/%d') asc",
             nativeQuery = true
     )
     List<ResponseSondeVO> findOnlyKpopCount(String fromDate, String toDate);
